@@ -6,9 +6,13 @@ All data is **temporary and stored on the phone** (AsyncStorage), seeded with sa
 products, invoices and pick-lists (`src/data/seed.js`). There is no SQL / Salesforce / OOP / SAP connection yet;
 the "sync" is simulated so order statuses move the way the handbook describes.
 
+## Download
+**[Download the latest APK (Android)](https://github.com/shan-crush-247/Sales-Settu-Mobile-App/releases/latest)** - open the release and tap `SalesSetu-v1.1.1.apk`.
+
 ## Install on a phone
-1. Copy `SalesSetu-v1.1.0.apk` to an Android phone and open it (allow "Install unknown apps").
+1. Download `SalesSetu-v1.1.1.apk` on an Android phone (Android 7.0+) and open it (allow "Install unknown apps").
 2. Log in: **SE-1001 / demo123**.
+3. iPhone: run the project with `npx expo start --lan --go` and open it in the **Expo Go** app.
 
 ## What is covered (handbook screen numbers)
 | Area | Screens |

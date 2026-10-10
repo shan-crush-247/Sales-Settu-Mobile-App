@@ -10,6 +10,6 @@ Set-Location (Join-Path $root 'android')
 Get-Content (Join-Path $root 'build.log') | Select-String -Pattern 'BUILD|What went wrong' -Context 0,6 | Select-Object -Last 3
 $apk = Join-Path $root 'android\app\build\outputs\apk\release\app-release.apk'
 if (Test-Path $apk) {
-    Copy-Item $apk (Join-Path $root 'SalesSetu-v1.1.0.apk') -Force
-    "APK: " + (Join-Path $root 'SalesSetu-v1.1.0.apk') + "  (" + [math]::Round((Get-Item $apk).Length / 1MB, 1) + " MB)"
+    Copy-Item $apk (Join-Path $root 'SalesSetu-v1.1.1.apk') -Force
+    "APK: " + (Join-Path $root 'SalesSetu-v1.1.1.apk') + "  (" + [math]::Round((Get-Item $apk).Length / 1MB, 1) + " MB)"
 } else { 'APK not produced' }
