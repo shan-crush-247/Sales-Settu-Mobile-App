@@ -1,0 +1,77 @@
+# Builds an UNSIGNED iOS .ipa on GitHub's macOS runners and attaches it to a GitHub Release.
+# Install on an iPhone by signing it with your Apple ID using Sideloadly / AltStore.
+name: iOS build (unsigned IPA)
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Release tag to attach the IPA to (created if missing)"
+        required: true
+        default: "ios-v1.1.1"
+
+permissions:
+  contents: write
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+    timeout-minutes: 90
+    env:
+      CI: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install JS dependencies
+        run: npm ci
+
+      - name: Generate native iOS project
+        run: npx expo prebuild --platform ios --no-install
+
+      - name: Install CocoaPods
+        run: cd ios && pod install
+
+      - name: Build app (Release, no code signing)
+        run: |
+          cd ios
+          WS=$(ls -d *.xcworkspace | head -1)
+          SCHEME="${WS%.xcworkspace}"
+          echo "Workspace: $WS  Scheme: $SCHEME"
+          xcodebuild -workspace "$WS" -scheme "$SCHEME" -configuration Release \
+            -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            build | tail -n 60
+
+      - name: Package IPA
+        run: |
+          APP=$(find ios/build/Build/Products/Release-iphoneos -maxdepth 1 -name "*.app" | head -1)
+          echo "App bundle: $APP"
+          mkdir -p Payload
+          cp -R "$APP" Payload/
+          zip -qry SalesSetu-unsigned.ipa Payload
+          ls -lh SalesSetu-unsigned.ipa
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SalesSetu-unsigned-ipa
+          path: SalesSetu-unsigned.ipa
+
+      - name: Attach IPA to GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ inputs.release_tag }}
+        run: |
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            gh release create "$TAG" --title "SalesSetu iOS build ($TAG)" --target "$GITHUB_SHA" \
+              --notes "Unsigned iOS build (.ipa) of SalesSetu. Install on iPhone with Sideloadly or AltStore using your Apple ID (free Apple IDs: re-sign every 7 days; enable Developer Mode on the iPhone). Demo login: SE-1001 / demo123."
+          fi
+          gh release upload "$TAG" SalesSetu-unsigned.ipa --clobber
