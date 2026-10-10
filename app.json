@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "SalesSetu",
+    "slug": "salessetu",
+    "version": "1.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ramraj.salessetu"
+    },
+    "android": {
+      "package": "com.ramraj.salessetu",
+      "versionCode": 2,
+      "adaptiveIcon": {
+        "backgroundColor": "#6D28D9",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "permissions": ["android.permission.CAMERA", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "@react-native-community/datetimepicker",
+      ["expo-camera", { "cameraPermission": "Allow SalesSetu to use the camera to scan dealer and product QR codes.", "recordAudioAndroid": false }],
+      ["expo-image-picker", { "cameraPermission": "Allow SalesSetu to take your Day Start photo, planogram and bill photos." }],
+      ["expo-location", { "locationWhenInUsePermission": "Allow SalesSetu to record your GPS location at Day Start." }]
+    ]
+  }
+}
