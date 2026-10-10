@@ -22,7 +22,16 @@
       "permissions": ["android.permission.CAMERA", "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"]
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro",
+      "output": "single",
+      "name": "SalesSetu",
+      "shortName": "SalesSetu",
+      "themeColor": "#5B4CF0",
+      "backgroundColor": "#F4F5FB"
+    },
+    "experiments": {
+      "baseUrl": "/Sales-Settu-Mobile-App"
     },
     "plugins": [
       "@react-native-community/datetimepicker",

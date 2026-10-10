@@ -125,6 +125,7 @@ export function ScanScreen({ route, navigation }) {
   const mode = route.params.mode;
   const [perm, requestPerm] = useCameraPermissions();
   const done = useRef(false);
+  const [manual, setManual] = useState('');
   useEffect(() => { if (perm && !perm.granted && perm.canAskAgain) requestPerm(); }, [perm]);
   const onScan = ({ data }) => {
     if (done.current) return;
@@ -148,7 +149,13 @@ export function ScanScreen({ route, navigation }) {
       ) : (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 30 }}><Text style={{ color: '#fff', textAlign: 'center', marginBottom: 16 }}>Camera permission is needed to scan QR codes.</Text><Btn title="Allow camera" onPress={requestPerm} /></View>
       )}
-      <View style={{ padding: 14, backgroundColor: '#111' }}><Text style={{ color: '#ccc', textAlign: 'center', fontSize: 12 }}>Demo QR text: {mode === 'bp' ? 'a BP code, e.g. C051500' : 'a product code, e.g. P1'}</Text></View>
+      <View style={{ padding: 14, backgroundColor: '#111' }}>
+        <Text style={{ color: '#ccc', fontSize: 12, marginBottom: 8 }}>Or type the code ({mode === 'bp' ? 'BP code, e.g. C100001' : 'product code, e.g. P1'}):</Text>
+        <View style={S.row}>
+          <TextInput value={manual} onChangeText={setManual} autoCapitalize="characters" placeholder={mode === 'bp' ? 'C100001' : 'P1'} placeholderTextColor="#777" style={[S.input, { flex: 1, backgroundColor: '#222', color: '#fff', borderColor: '#333' }]} />
+          <Btn small title="Open" onPress={() => { done.current = false; onScan({ data: manual }); }} style={{ marginLeft: 8 }} />
+        </View>
+      </View>
     </View>
   );
 }

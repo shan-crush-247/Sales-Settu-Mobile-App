@@ -7,7 +7,10 @@ products, invoices and pick-lists (`src/data/seed.js`). There is no SQL / Salesf
 the "sync" is simulated so order statuses move the way the handbook describes.
 
 ## Download
-**[Download the latest APK (Android)](https://github.com/shan-crush-247/Sales-Settu-Mobile-App/releases/latest)** - open the release and tap `SalesSetu-v1.1.1.apk`.
+- **iPhone / any phone browser:** open **https://shan-crush-247.github.io/Sales-Settu-Mobile-App/** in Safari, then tap **Share > Add to Home Screen** - it opens full-screen like an app.
+- **Android:** **[Download the latest APK](https://github.com/shan-crush-247/Sales-Settu-Mobile-App/releases/latest)** - open the release and tap `SalesSetu-v1.1.1.apk`.
+
+Publish the web app again after changes: `powershell -File publish-web.ps1` (builds `dist/` and pushes it to the `gh-pages` branch).
 
 ## Install on a phone
 1. Download `SalesSetu-v1.1.1.apk` on an Android phone (Android 7.0+) and open it (allow "Install unknown apps").
