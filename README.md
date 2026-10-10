@@ -10,6 +10,18 @@ the "sync" is simulated so order statuses move the way the handbook describes.
 - **iPhone / any phone browser:** open **https://shan-crush-247.github.io/Sales-Settu-Mobile-App/** in Safari, then tap **Share > Add to Home Screen** - it opens full-screen like an app.
 - **Android:** **[Download the latest APK](https://github.com/shan-crush-247/Sales-Settu-Mobile-App/releases/latest)** - open the release and tap `SalesSetu-v1.1.1.apk`.
 
+- **iPhone native app (sideload):** download `SalesSetu-unsigned.ipa` from the **[iOS release](https://github.com/shan-crush-247/Sales-Settu-Mobile-App/releases/tag/ios-v1.1.1)** and install it with Sideloadly (see below).
+
+### Install the iOS .ipa with Sideloadly (Windows, free Apple ID)
+1. On the PC install **iTunes** (from apple.com, not the Microsoft Store) and **Sideloadly** (sideloadly.io).
+2. Connect the iPhone by USB, unlock it and tap **Trust**.
+3. Open Sideloadly, drag in `SalesSetu-unsigned.ipa`, enter your Apple ID, click **Start** (sign in / 2FA when asked).
+4. On the iPhone: **Settings > Privacy & Security > Developer Mode > On** (restart when asked), then
+   **Settings > General > VPN & Device Management** > your Apple ID > **Trust**.
+5. Open SalesSetu and log in with **SE-1001 / demo123**.
+With a free Apple ID the app stops opening after **7 days** - repeat step 3 to re-sign it (data is kept).
+New iOS builds: GitHub > Actions > "iOS build (unsigned IPA)" > Run workflow.
+
 Publish the web app again after changes: `powershell -File publish-web.ps1` (builds `dist/` and pushes it to the `gh-pages` branch).
 
 ## Install on a phone
